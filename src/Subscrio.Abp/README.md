@@ -1,6 +1,6 @@
-# Subscrio.Abp
+# Subscrio for ABP
 
-`Subscrio.Abp` connects ABP's `IFeatureChecker` pipeline to Subscrio subscription entitlements.
+`Subscrio.Abp` connects ABP's `IFeatureChecker` to Subscrio subscription entitlements. ABP remains responsible for feature definitions and application-level checks. Subscrio resolves the current customer's value from its subscription, plan, and overrides.
 
 Learn more at [subscrio.com](https://subscrio.com), or visit the main [subscrio/subscrio repository](https://github.com/subscrio/subscrio).
 
@@ -8,12 +8,12 @@ Learn more at [subscrio.com](https://subscrio.com), or visit the main [subscrio/
 dotnet add package Subscrio.Abp
 ```
 
-Register `Subscrio.Core` with the application's database connection, then choose one customer identity module.
-
 Choose one customer identity module:
 
 - `SubscrioAbpTenantModule` maps `ICurrentTenant.Id` to a Subscrio customer.
 - `SubscrioAbpUserModule` maps `ICurrentUser.Id` to a Subscrio customer for applications that do not use tenants.
+
+Register `Subscrio.Core` with the application's database connection and depend on the selected module:
 
 ```csharp
 [DependsOn(typeof(SubscrioAbpTenantModule))]
@@ -49,4 +49,4 @@ var reports = await featureChecker.IsEnabledAsync("acme-reports");
 var maxProjects = await featureChecker.GetAsync<int>("acme-max-projects");
 ```
 
-See the [public repository](https://github.com/subscrio/subscrio-abp) for the complete LocalDB sample, user-mode configuration, tests, and diagrams.
+See the [public repository](https://github.com/subscrio/subscrio-abp) for tenant and user configuration, catalog synchronization, the runnable sample, tests, and diagrams.
