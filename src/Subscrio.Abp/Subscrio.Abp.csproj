@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(UseLocalSubscrioCore)' != 'true'">
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.0" />
     <PackageReference Include="Subscrio.Core" Version="$(SubscrioVersion)" />
   </ItemGroup>
 
