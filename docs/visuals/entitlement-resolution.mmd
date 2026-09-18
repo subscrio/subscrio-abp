@@ -1,0 +1,7 @@
+flowchart TD
+    Request[ABP asks for AppFeatures.MaxProjects<br/>acme-max-projects] --> Customer[Tenant or user maps to Subscrio customer]
+    Customer --> Override{Subscription override?}
+    Override -->|Yes: 250| Result[ABP receives 250]
+    Override -->|No| Plan{Plan value?}
+    Plan -->|Yes: 100| PlanResult[ABP receives 100]
+    Plan -->|No| Default[ABP feature default: 3]

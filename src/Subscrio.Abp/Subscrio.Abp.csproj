@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>12</LangVersion>
+    <RootNamespace>Subscrio.Abp</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PackageId>Subscrio.Abp</PackageId>
+    <Version>$(SubscrioVersion)</Version>
+    <Authors>Subscrio</Authors>
+    <Description>Connects ABP's feature system to Subscrio subscription entitlements.</Description>
+    <PackageTags>subscrio;abp;abp-framework;entitlements;subscription;saas;multi-tenancy;feature-management</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/subscrio/subscrio-abp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/subscrio/subscrio-abp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <IsPackable>true</IsPackable>
+    <SubscrioCoreProjectPath>$(MSBuildThisFileDirectory)../../../../core/dotnet/src/Subscrio.Core.csproj</SubscrioCoreProjectPath>
+    <UseLocalSubscrioCore Condition="'$(UseLocalSubscrioCore)' == '' and Exists('$(SubscrioCoreProjectPath)')">true</UseLocalSubscrioCore>
+    <UseLocalSubscrioCore Condition="'$(UseLocalSubscrioCore)' == ''">false</UseLocalSubscrioCore>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Features" Version="10.6.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseLocalSubscrioCore)' == 'true'">
+    <ProjectReference Include="../../../../core/dotnet/src/Subscrio.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseLocalSubscrioCore)' != 'true'">
+    <PackageReference Include="Subscrio.Core" Version="$(SubscrioVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>

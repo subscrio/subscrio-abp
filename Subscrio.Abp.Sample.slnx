@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/Subscrio.Abp/Subscrio.Abp.csproj" />
+  <Project Path="src/Subscrio.Abp.Sample/Subscrio.Abp.Sample.csproj" />
+  <Project Path="tests/Subscrio.Abp.Tests/Subscrio.Abp.Tests.csproj" />
+</Solution>

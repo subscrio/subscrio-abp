@@ -1,0 +1,7 @@
+flowchart LR
+    Stripe[Stripe] -->|Webhook| Payment[ABP Payment Module]
+    Payment -->|Publishes| Event[ABP distributed<br/>subscription event]
+    Event --> Handler[Subscrio event handler]
+    Handler --> Database[(Customer subscription)]
+    Database --> Provider[ABP feature value provider]
+    Provider --> Checker[IFeatureChecker]

@@ -1,0 +1,5 @@
+flowchart LR
+    App[ABP application code] --> Checker[ABP IFeatureChecker]
+    Checker --> Provider[Subscrio.Abp module<br/>feature value provider<br/>tenant or user resolver]
+    Provider --> Resolver[Subscrio entitlement resolver]
+    Resolver --> Data[(Plans, subscriptions, overrides)]
