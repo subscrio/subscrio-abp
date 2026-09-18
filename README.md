@@ -2,7 +2,7 @@
 
 This repository is the working implementation for the accompanying ABP and Subscrio article. The article's code should come from this repository so readers can copy the same code that was compiled and run here.
 
-The revised article source is `docs/blog.md`.
+Learn more about Subscrio at [subscrio.com](https://subscrio.com). For the core libraries, project-wide documentation, and cross-cutting issues, visit the main [subscrio/subscrio repository](https://github.com/subscrio/subscrio).
 
 The solution has three projects:
 

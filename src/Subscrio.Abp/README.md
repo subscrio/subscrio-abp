@@ -2,6 +2,8 @@
 
 `Subscrio.Abp` connects ABP's `IFeatureChecker` pipeline to Subscrio subscription entitlements.
 
+Learn more at [subscrio.com](https://subscrio.com), or visit the main [subscrio/subscrio repository](https://github.com/subscrio/subscrio).
+
 ```powershell
 dotnet add package Subscrio.Abp
 ```
