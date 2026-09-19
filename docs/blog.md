@@ -1,12 +1,12 @@
-# Adding plans and customer overrides to ABP with Subscrio
+# Enhancing ABP Feature Entitlements with Subscrio: Plans, Limits, and Overrides
 
 ![ABP and Subscrio: plans, features and customer overrides, showing Free with 3 projects, Pro with 100, and Acme with an override for 250](https://raw.githubusercontent.com/subscrio/subscrio-abp/main/docs/visuals/abp-subscrio-cover.jpg)
 
-[Subscrio](https://subscrio.com) is a free, open-source entitlement engine for .NET and TypeScript that connects what customers buy to the features and limits they receive. It runs inside your application and resolves access from plans and customer-specific overrides in your own database, supporting recurring subscriptions, one-time purchases, and lifetime access.
+[Subscrio](https://subscrio.com) is a free, open-source entitlement engine for .NET and TypeScript that connects what customers buy to the features and limits they receive. It runs inside your application and resolves those feature entitlements from plans and customer-specific overrides in your own database, supporting recurring subscriptions, one-time purchases, and lifetime access.
 
-If you're building with ABP, you already have a useful place to read those values: its feature system. A call to `IFeatureChecker` can tell you whether reports are enabled or how many projects a customer is allowed to create.
+If you're building with ABP Framework, you already have a useful place to read those values: its feature system. A call to `IFeatureChecker` can tell you whether reports are enabled or how many projects a customer is allowed to create.
 
-We'll use the reusable `Subscrio.Abp` module to connect them, then work through its console sample. We'll define a Pro plan with a 100-project limit, give Acme Manufacturing an override for 250, and watch ABP return the right values through `IFeatureChecker`.
+We'll add plan-based feature access through the reusable `Subscrio.Abp` module, then work through its console sample. We'll define a Pro plan with a 100-project limit, give Acme Manufacturing an override for 250, and watch ABP return the right values through `IFeatureChecker`.
 
 ![ABP application code calls IFeatureChecker, which uses the Subscrio module to resolve customer entitlements from plans and overrides](https://raw.githubusercontent.com/subscrio/subscrio-abp/main/docs/visuals/architecture-flow.png)
 
@@ -60,7 +60,7 @@ Reports will show us a value inherited from the plan. Maximum projects will show
 
 The sample assigns a monthly billing cycle directly, so you can run the whole example without a payment provider. We'll come back to Stripe once the feature integration is working.
 
-## What the module takes care of
+## What the Subscrio ABP module takes care of
 
 There are two jobs we shouldn't have to repeat in every ABP application: connecting feature checks to Subscrio, and copying feature definitions into its catalog. `Subscrio.Abp` handles both.
 
@@ -144,7 +144,7 @@ public static class AppTenants
 
 The customer key comes from the tenant's ID, so renaming Acme Manufacturing won't change its identity in Subscrio. The same helper will be used when we create the customer.
 
-Inside `ConfigureServices`, [`AbpSubscrioSampleModule.cs`](https://github.com/subscrio/subscrio-abp/blob/main/src/Subscrio.Abp.Sample/AbpSubscrioSampleModule.cs) registers Core with the sample's SQL Server LocalDB connection:
+Inside `ConfigureServices`, [`AbpSubscrioSampleModule.cs`](https://github.com/subscrio/subscrio-abp/blob/main/src/Subscrio.Abp.Sample/AbpSubscrioSampleModule.cs) registers `Subscrio.Core`, the [.NET entitlement library](https://subscrio.com/dotnet-entitlement-library/), with the sample's SQL Server LocalDB connection:
 
 ```csharp
 context.Services.AddSubscrio(

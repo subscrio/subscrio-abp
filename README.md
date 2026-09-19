@@ -6,7 +6,7 @@
 
 [Subscrio website](https://subscrio.com) | [Main repository](https://github.com/subscrio/subscrio) | [Subscrio documentation](https://docs.subscrio.com)
 
-For a walkthrough of the module, sample, and JSON catalog configuration, read [Adding plans and customer overrides to ABP with Subscrio](docs/blog.md).
+For a walkthrough of the module, sample, and JSON catalog configuration, read [Enhancing ABP Feature Entitlements with Subscrio: Plans, Limits, and Overrides](docs/blog.md).
 
 ## How it works
 
