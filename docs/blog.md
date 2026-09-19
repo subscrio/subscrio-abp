@@ -1,5 +1,7 @@
 # Adding plans and customer overrides to ABP with Subscrio
 
+![ABP and Subscrio: plans, features and customer overrides, showing Free with 3 projects, Pro with 100, and Acme with an override for 250](https://raw.githubusercontent.com/subscrio/subscrio-abp/main/docs/visuals/abp-subscrio-cover.jpg)
+
 [Subscrio](https://subscrio.com) is a free, open-source entitlement engine for .NET and TypeScript that connects what customers buy to the features and limits they receive. It runs inside your application and resolves access from plans and customer-specific overrides in your own database, supporting recurring subscriptions, one-time purchases, and lifetime access.
 
 If you're building with ABP, you already have a useful place to read those values: its feature system. A call to `IFeatureChecker` can tell you whether reports are enabled or how many projects a customer is allowed to create.
@@ -14,7 +16,7 @@ ABP's open-source [Feature System](https://abp.io/docs/10.6/framework/infrastruc
 
 ABP Commercial covers some of that ground. Its [SaaS module](https://abp.io/docs/10.6/modules/saas?LanguageCode=en) assigns an edition to a tenant, with feature values and tenant overrides. Its [Payment module](https://abp.io/docs/10.6/modules/payment?LanguageCode=en) supports one-time payments, Stripe recurring payments, and payment plans linked to gateway prices. Both modules require an ABP Team license or higher. The built-in entitlement model is still one edition per tenant; fulfilling a one-time purchase requires application code.
 
-Subscrio is useful when you need access to follow your product model more closely: several plan assignments for one customer, access sold to individual users, or an exception attached to a particular assignment. It stores products, plans, feature values, and billing cycles together, and includes one-line-of-code Stripe integration. You can use it with open-source ABP without adding the commercial SaaS or Payment modules.
+Subscrio is useful when you need access to follow your product model more closely: several plan assignments for one customer, access sold to individual users, or an exception attached to a particular assignment. It stores products, plans, feature values, and billing cycles together, and includes helpers for Stripe Checkout and event synchronization. You can use it with open-source ABP without adding the commercial SaaS or Payment modules.
 
 You can also decide what access a customer keeps after a plan expires. ABP Commercial supports edition expiration separately from tenant activation. Subscrio lets you configure a replacement plan, such as moving a customer to a free package, while your application controls whether they can still sign in.
 
@@ -500,4 +502,8 @@ There is a distinction between Subscrio's access model and this Checkout helper:
 
 The console sample contains no Stripe keys, Checkout flow, or webhook endpoint. `Subscrio.Abp` also has no dependency on ABP Commercial's Payment or SaaS modules and doesn't synchronize their editions or payment records. Its integration point is ABP's feature API.
 
-For Acme Manufacturing, that means the code checking the project limit receives `250`. The customer's assignment explains why, the override records the exception, and the Pro plan remains at `100` for everyone else.
+## Keep feature checks in ABP
+
+We've connected ABP's feature API to a catalog of plans and customer overrides, configured that catalog in C# or JSON, and traced the result through the console sample. For Acme Manufacturing, the code checking the project limit receives `250`. The customer's assignment explains why, the override records the exception, and the Pro plan remains at `100` for everyone else.
+
+Try the [sample repository](https://github.com/subscrio/subscrio-abp) with your own features and plans. If you run into an integration issue or need a different customer mapping, share it in the [repository's issues](https://github.com/subscrio/subscrio-abp/issues).
