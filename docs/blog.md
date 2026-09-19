@@ -6,6 +6,8 @@ If you're building with ABP, you already have a useful place to read those value
 
 We'll use the reusable `Subscrio.Abp` module to connect them, then work through its console sample. We'll define a Pro plan with a 100-project limit, give Acme Manufacturing an override for 250, and watch ABP return the right values through `IFeatureChecker`.
 
+![ABP application code calls IFeatureChecker, which uses the Subscrio module to resolve customer entitlements from plans and overrides](https://raw.githubusercontent.com/subscrio/subscrio-abp/main/docs/visuals/architecture-flow.png)
+
 ## Why add Subscrio to ABP?
 
 ABP's open-source [Feature System](https://abp.io/docs/10.6/framework/infrastructure/features) handles feature definitions, defaults, and value resolution. Feature Management adds tenant-specific values. Products, plans, purchases, and billing are outside that feature system, so you need something to connect a customer's access to the values your application reads.
