@@ -1,5 +1,9 @@
 # Blog visuals
 
+The [article](../blog.md) embeds `subscrio-server-dashboard.png`, a Subscrio Server dashboard screenshot stored in this directory. It uses an absolute raw GitHub URL so the image can load when the article is imported outside GitHub. The PNG is approximately 244 KB.
+
+The diagrams below are supporting repository assets; they are not embedded in the article. If you add one to the ABP article, export it as PNG or JPG to follow [ABP's media guidelines](https://abp.io/blog-guidelines).
+
 Each diagram is available as an SVG for direct use on the web and as Mermaid source for editing.
 
 | Diagram | SVG | Editable source |
