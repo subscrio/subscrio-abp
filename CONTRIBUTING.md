@@ -25,6 +25,19 @@ Run the LocalDB sample:
 dotnet run --project .\src\Subscrio.Abp.Sample
 ```
 
+### Developing against local Core source
+
+Normal builds use the released `Subscrio.Core` NuGet package, even when a local Core checkout exists. The sample references the ABP module project in this repository.
+
+To work on both repositories together, explicitly enable the local Core project at `../../core/dotnet/src/Subscrio.Core.csproj`, relative to this repository root:
+
+```powershell
+dotnet build .\Subscrio.Abp.Sample.slnx -p:UseLocalSubscrioCore=true
+dotnet run --project .\src\Subscrio.Abp.Sample -p:UseLocalSubscrioCore=true
+```
+
+The local project must exist when this option is enabled. Before submitting changes, rerun the normal build and test commands above against NuGet. Allow restore when switching dependency modes; do not use `--no-restore` or reuse a previous build with `--no-build` until you have rebuilt in the selected mode.
+
 ## Pull requests
 
 - Keep changes focused and include tests for behavior changes.

@@ -26,7 +26,6 @@
     <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
     <IsPackable>true</IsPackable>
     <SubscrioCoreProjectPath>$(MSBuildThisFileDirectory)../../../../core/dotnet/src/Subscrio.Core.csproj</SubscrioCoreProjectPath>
-    <UseLocalSubscrioCore Condition="'$(UseLocalSubscrioCore)' == '' and Exists('$(SubscrioCoreProjectPath)')">true</UseLocalSubscrioCore>
     <UseLocalSubscrioCore Condition="'$(UseLocalSubscrioCore)' == ''">false</UseLocalSubscrioCore>
   </PropertyGroup>
 
@@ -35,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(UseLocalSubscrioCore)' == 'true'">
-    <ProjectReference Include="../../../../core/dotnet/src/Subscrio.Core.csproj" />
+    <ProjectReference Include="$(SubscrioCoreProjectPath)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(UseLocalSubscrioCore)' != 'true'">
