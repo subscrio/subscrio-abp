@@ -16,6 +16,14 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
+        with:
+          path: integrations/abp
+
+      - name: Check out Subscrio.Core
+        uses: actions/checkout@v7
+        with:
+          repository: subscrio/subscrio-dotnet
+          path: core/dotnet
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v6
@@ -23,13 +31,17 @@ jobs:
           dotnet-version: 10.0.x
 
       - name: Restore
-        run: dotnet restore .\Subscrio.Abp.Sample.slnx
+        working-directory: integrations/abp
+        run: dotnet restore .\Subscrio.Abp.Sample.slnx -p:UseLocalSubscrioCore=true
 
       - name: Build
-        run: dotnet build .\Subscrio.Abp.Sample.slnx --configuration Release --no-restore
+        working-directory: integrations/abp
+        run: dotnet build .\Subscrio.Abp.Sample.slnx --configuration Release --no-restore -p:UseLocalSubscrioCore=true
 
       - name: Test
-        run: dotnet test .\Subscrio.Abp.Sample.slnx --configuration Release --no-build
+        working-directory: integrations/abp
+        run: dotnet test .\Subscrio.Abp.Sample.slnx --configuration Release --no-build -p:UseLocalSubscrioCore=true
 
       - name: Pack
-        run: dotnet pack .\src\Subscrio.Abp\Subscrio.Abp.csproj --configuration Release --no-build --output .\artifacts
+        working-directory: integrations/abp
+        run: dotnet pack .\src\Subscrio.Abp\Subscrio.Abp.csproj --configuration Release --no-build --output .\artifacts -p:UseLocalSubscrioCore=true
