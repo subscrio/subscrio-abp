@@ -1,5 +1,7 @@
 # Enhancing ABP Feature Entitlements with Subscrio: Plans, Limits, and Overrides
 
+![ABP and Subscrio: plans, features and customer overrides, showing Free with 3 projects, Pro with 100, and Acme with an override for 250](https://raw.githubusercontent.com/subscrio/subscrio-abp/main/docs/visuals/abp-subscrio-cover.jpg)
+
 [Subscrio](https://subscrio.com) is a free, open-source entitlement engine for .NET and TypeScript that connects what customers buy to the features and limits they receive. It runs inside your application and resolves those feature entitlements from plans and customer-specific overrides in your own database, supporting recurring subscriptions, one-time purchases, and lifetime access.
 
 If you're building with ABP Framework, you already have a useful place to read those values: its feature system. A call to `IFeatureChecker` can tell you whether reports are enabled or how many projects a customer is allowed to create.
