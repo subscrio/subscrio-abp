@@ -83,6 +83,31 @@ public sealed class DemoRunner
             Console.WriteLine($"MaxProjects:   {maxProjects}");
             Console.WriteLine();
             Console.WriteLine("PASS: defaults → plan → customer override resolved correctly.");
+
+            const string addonKey = "extra-projects";
+            await _subscrio.Products.AssociateFeatureAsync(AppProducts.Acme, AppFeatures.MaxProjects,
+                new(AddonRule: "additive"));
+            if (await _subscrio.Addons.GetAddonAsync(addonKey) is null)
+                await _subscrio.Addons.CreateAddonAsync(new(addonKey, AppProducts.Acme, "Extra projects",
+                    FeatureValues: new() { [AppFeatures.MaxProjects] = "50" }));
+            await _subscrio.Subscriptions.RemoveFeatureOverrideAsync(DemoCatalog.SubscriptionKey, AppFeatures.MaxProjects);
+            try
+            {
+                await _subscrio.Subscriptions.AttachAddonAsync(DemoCatalog.SubscriptionKey, addonKey);
+                Ensure(await _featureChecker.GetAsync<int>(AppFeatures.MaxProjects) == 150, "add-on allowance", "150");
+                await _subscrio.Subscriptions.DetachAddonAsync(DemoCatalog.SubscriptionKey, addonKey);
+                Ensure(await _featureChecker.GetAsync<int>(AppFeatures.MaxProjects) == 100, "detached add-on", "100");
+                await _subscrio.Subscriptions.AddFeatureOverrideAsync(DemoCatalog.SubscriptionKey,
+                    AppFeatures.MaxProjects, "300", Subscrio.Core.Domain.ValueObjects.OverrideType.Timed,
+                    DateTime.UtcNow.AddMinutes(10));
+                Ensure(await _featureChecker.GetAsync<int>(AppFeatures.MaxProjects) == 300, "timed override", "300");
+                Console.WriteLine("PASS: ABP resolves attached add-ons, detachment, and active timed overrides.");
+            }
+            finally
+            {
+                await _subscrio.Subscriptions.AddFeatureOverrideAsync(DemoCatalog.SubscriptionKey,
+                    AppFeatures.MaxProjects, "250");
+            }
         }
     }
 

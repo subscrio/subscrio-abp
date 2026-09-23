@@ -4,8 +4,9 @@ namespace Subscrio.Abp.Sample;
 
 public static class LocalDbDatabase
 {
-    private const string DatabaseName = "SubscrioAbpSample";
-    private const string LocalDbServer = @"(localdb)\MSSQLLocalDB";
+    private static string DatabaseName => Environment.GetEnvironmentVariable("SUBSCRIO_SAMPLE_DATABASE") ?? "SubscrioAbpSample";
+    private static string LocalDbServer => Environment.GetEnvironmentVariable("SUBSCRIO_SAMPLE_SQLSERVER") ?? @"(localdb)\MSSQLLocalDB";
+    private static bool UsesLocalDb => LocalDbServer.StartsWith("(localdb)", StringComparison.OrdinalIgnoreCase);
 
     public static string DataFilePath => Path.Combine(GetDataDirectory(), "subscrio-abp.mdf");
 
@@ -23,7 +24,7 @@ public static class LocalDbDatabase
 
     public static async Task EnsureCreatedAsync()
     {
-        Directory.CreateDirectory(GetDataDirectory());
+        if (UsesLocalDb) Directory.CreateDirectory(GetDataDirectory());
 
         var masterConnectionString = new SqlConnectionStringBuilder(ConnectionString)
         {
@@ -39,7 +40,7 @@ public static class LocalDbDatabase
         catch (Exception exception)
         {
             throw new InvalidOperationException(
-                "SQL Server LocalDB is required. Install the LocalDB component, then run the sample again.",
+                "Cannot connect to SQL Server. Install LocalDB or set SUBSCRIO_SAMPLE_SQLSERVER to an accessible instance.",
                 exception);
         }
 
@@ -50,7 +51,7 @@ public static class LocalDbDatabase
 
         if (Convert.ToInt32(await existsCommand.ExecuteScalarAsync()) == 1)
         {
-            Console.WriteLine($"LocalDB file: {DataFilePath}");
+            Console.WriteLine($"Database: {DatabaseName}");
             return;
         }
 
@@ -58,7 +59,7 @@ public static class LocalDbDatabase
         var logFile = EscapeSqlLiteral(LogFilePath);
         var databaseIdentifier = EscapeSqlIdentifier(DatabaseName);
 
-        var createSql = File.Exists(DataFilePath)
+        var createSql = !UsesLocalDb ? $"CREATE DATABASE [{databaseIdentifier}]" : File.Exists(DataFilePath)
             ? $"CREATE DATABASE [{databaseIdentifier}] ON " +
               $"(FILENAME = N'{dataFile}'), (FILENAME = N'{logFile}') FOR ATTACH"
             : $"CREATE DATABASE [{databaseIdentifier}] ON PRIMARY " +
@@ -68,7 +69,7 @@ public static class LocalDbDatabase
         await using var createCommand = new SqlCommand(createSql, connection);
         await createCommand.ExecuteNonQueryAsync();
 
-        Console.WriteLine($"LocalDB file: {DataFilePath}");
+        Console.WriteLine($"Database: {DatabaseName}");
     }
 
     private static string GetDataDirectory()

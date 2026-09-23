@@ -4,6 +4,14 @@ All notable changes to Subscrio for ABP are recorded here.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-09-23
+
+### Changed
+
+- Use published Subscrio.Core 0.5.1 by default; local core builds remain available through UseLocalSubscrioCore.
+- The sample verifies add-on attachment, detachment, and timed overrides through ABP IFeatureChecker.
+- Allow a SQL Server instance to be configured for the sample while retaining LocalDB as the default.
+
 ## [0.4.0] - 2026-09-20
 
 ### Added
