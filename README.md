@@ -27,7 +27,7 @@ The package targets .NET 8, .NET 9, and .NET 10.
 dotnet add package Subscrio.Abp
 ```
 
-`Subscrio.Abp` and `Subscrio.Core` use the same package version.
+The package builds and tests against published `Subscrio.Core` 0.5.1. Its core dependency is declared separately from the integration's package version.
 
 ## Configure an ABP application
 
@@ -178,7 +178,9 @@ Run the tests with:
 dotnet test .\Subscrio.Abp.Sample.slnx
 ```
 
-The tests cover tenant and user customer keys, missing identity contexts, and invalid resolver registration.
+The tests cover tenant and user customer keys, missing identity contexts, and invalid resolver registration. The console sample also checks that ABP resolves attached add-ons, add-on removal, and active timed overrides through `IFeatureChecker`.
+
+To run the sample against an existing SQL Server instance, set `SUBSCRIO_SAMPLE_SQLSERVER` (for example, `localhost`). Set `SUBSCRIO_SAMPLE_DATABASE` to choose a separate demo database; the default is `SubscrioAbpSample`. The sample uses Windows authentication and needs permission to create that database. LocalDB remains the default when no server is specified.
 
 ## Repository layout
 

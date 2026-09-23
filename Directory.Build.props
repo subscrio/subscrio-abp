@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <!-- Keep this value aligned with Subscrio.Core. The internal NuGet release script updates both repositories. -->
-    <SubscrioVersion>0.4.0</SubscrioVersion>
+    <!-- Package version for Subscrio.Abp; its core dependency is declared in the project. -->
+    <SubscrioVersion>0.5.0</SubscrioVersion>
   </PropertyGroup>
 </Project>

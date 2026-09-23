@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(UseLocalSubscrioCore)' != 'true'">
-    <PackageReference Include="Subscrio.Core" Version="$(SubscrioVersion)" />
+    <PackageReference Include="Subscrio.Core" Version="0.5.1" />
   </ItemGroup>
 
   <ItemGroup>
